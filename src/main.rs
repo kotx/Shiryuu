@@ -40,12 +40,12 @@ fn main() {
     match warnings {
         Ok(_) => {
             for warning in warnings.unwrap() {
-                warn!("Warning: {}", warning);
+                warn!("{}", warning);
             }
 
             info!("Config is valid, proceeding.");
         }
-        Err(e) => return error!("Config: {}", e),
+        Err(e) => return error!("{}", e),
     }
 
     info!("Binding to address {}", &config::CONFIG.address);
