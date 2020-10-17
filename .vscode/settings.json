@@ -1,5 +1,7 @@
 {
     "markdownlint.config": {
         "no-trailing-punctuation": false
-    }
+    },
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true
 }

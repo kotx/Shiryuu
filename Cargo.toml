@@ -1,9 +1,22 @@
 [package]
 name = "shiryuu"
-version = "0.1.0"
+version = "0.1.0-alpha"
 authors = ["Shiryuu Authors <shiryuu@yukata.tech>"]
 edition = "2018"
+
+build = "build.rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+env_logger = "0.8.1"
+Inflector = { version="0.11", default-features=false }
+lazy_static = "1.4"
+log = "0.4.11"
+rand = "0.7"
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.5"
+version-compare = "0.0.11"
+
+[build-dependencies]
+built = "0.4"
