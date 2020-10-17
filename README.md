@@ -29,3 +29,5 @@ This project is published under the [MIT LICENSE](https://github.com/ShiryuuMC/S
 ## Why the name?
 
 Shiryuu (支流) means tributary in Japanese, or where a river splits.
+
+The kanji also means tributary in Chinese.
