@@ -27,6 +27,7 @@ impl Default for Config {
 }
 
 impl Config {
+    // TODO: reloadable config
     pub fn load() -> Self {
         let path = Path::new("shiryuu.toml");
 
