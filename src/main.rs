@@ -61,8 +61,8 @@ async fn main() {
     init_logging();
     init_config();
 
-
     let listener = TcpListener::bind(&config::CONFIG.listen_address).await.unwrap();
+    info!("Listening on {}", listener.local_addr().unwrap());
 
     loop {
         let (socket, address) = listener.accept().await.unwrap();
