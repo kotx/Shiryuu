@@ -2,6 +2,8 @@
 
 Shiryuu is a router proxy for Minecraft, allowing multiple servers to be hosted behind one IP with no client configuration.
 
+Shiryuu can sit in front or behind of existing proxies like BungeeCord.
+
 Please note that the client **must** connect to the server from the domain, not IP. Shiryuu relies on the hostname sent by the client for routing.
 
 ## Table of Contents
