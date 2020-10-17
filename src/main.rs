@@ -10,7 +10,7 @@ use tokio::net::{TcpListener, TcpStream};
 mod config;
 mod networking;
 
-use networking::Connection;
+use networking::connection::Connection;
 
 fn init_logging() {
     let env = Env::default().filter("SHIRYUU_LOG_LEVEL");
@@ -53,7 +53,8 @@ fn init_config() -> Result<(), config::ConfigError> {
 }
 
 async fn process(socket: TcpStream, address: SocketAddr) {
-    let mut conn = Connection::new(address);
+    info!("Incoming connection from {}", address);
+    let mut conn = Connection::new(socket, address);
 }
 
 #[tokio::main]
