@@ -3,5 +3,8 @@
         "no-trailing-punctuation": false
     },
     "files.insertFinalNewline": true,
-    "files.trimFinalNewlines": true
+    "files.trimFinalNewlines": true,
+    "files.watcherExclude": {
+        "**/target/**": true
+    }
 }
