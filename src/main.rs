@@ -1,12 +1,25 @@
 #[macro_use]
 extern crate lazy_static;
 
+use env_logger::{Builder, Env};
 use log::{error, info, warn};
+use std::io::Write;
 
 mod config;
 
+fn init_logging() {
+    let env = Env::default().filter("SHIRYUU_LOG_LEVEL");
+
+    Builder::from_env(env)
+        .format(|buf, record| {
+            let timestamp = buf.timestamp_seconds();
+            writeln!(buf, "[{} {}]: {}", timestamp, record.level(), record.args())
+        })
+        .init();
+}
+
 fn main() {
-    env_logger::init();
+    init_logging();
 
     info!(
         "{} {}",

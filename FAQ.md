@@ -2,6 +2,6 @@
 
 ## Help! The logs aren't showing!
 
-Make sure the environment variable [`CARGO_LOG`](https://docs.rs/env_logger/0.8.1/env_logger/#enabling-logging) is set.
+Set the environment variable `SHIRYUU_LOG_LEVEL` to one of [these log levels.](https://docs.rs/log/0.4.6/log/enum.Level.html#variants)
 
-TL;DR: run `CARGO_LOG=shiryuu=info ./shiryuu`.
+TL;DR: run `SHIRYUU_LOG_LEVEL=info ./shiryuu`.
