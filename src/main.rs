@@ -23,7 +23,7 @@ fn init_logging() {
         .init();
 }
 
-fn init_config() {
+fn init_config() -> Result<(), config::ConfigError> {
     info!(
         "{} {}",
         config::built_info::get_pretty_name(),
@@ -46,9 +46,9 @@ fn init_config() {
                 warn!("{}", warning);
             }
 
-            info!("Config is valid, proceeding.");
+            return Ok(());
         }
-        Err(e) => return error!("{}", e),
+        Err(e) => Err(e),
     }
 }
 
@@ -59,7 +59,10 @@ async fn process(socket: TcpStream, address: SocketAddr) {
 #[tokio::main]
 async fn main() {
     init_logging();
-    init_config();
+    match init_config() {
+        Ok(_) => info!("Config is valid, proceeding."),
+        Err(e) => return error!("{}", e)
+    }
 
     let listener = TcpListener::bind(&config::CONFIG.listen_address).await.unwrap();
     info!("Listening on {}", listener.local_addr().unwrap());

@@ -5,6 +5,7 @@ use rand::{thread_rng, Rng};
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
+use thiserror::Error;
 use version_compare::Version;
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -41,20 +42,27 @@ impl Config {
         }
     }
 
-    pub fn validate(&self) -> Result<Vec<&str>, &str> {
+    pub fn validate(&self) -> Result<Vec<&str>, ConfigError> {
+        // TODO: implement custom type for warnings
         let mut warnings: Vec<&'static str> = vec![];
 
         let config_version = Version::from(self.version.as_str()).unwrap();
         let version = Version::from(built_info::PKG_VERSION).unwrap();
 
         if version.part(0).unwrap() != config_version.part(0).unwrap() {
-            return Err("Detected a major version mismatch! Please fix your config.");
+            return Err(ConfigError::MajorVersionMismatch());
         } else if version.part(1).unwrap() != config_version.part(1).unwrap() {
             warnings.push("Detected a minor version mismatch. A config update is encouraged.");
         }
 
         Ok(warnings)
     }
+}
+
+#[derive(Error, Debug)]
+pub enum ConfigError {
+    #[error("Detected a major version mismatch! Please fix your config.")]
+    MajorVersionMismatch(),
 }
 
 lazy_static! {
