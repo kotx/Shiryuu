@@ -10,7 +10,7 @@ use version_compare::Version;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
     version: String,
-    pub address: String,
+    pub listen_address: String,
     pub velocity: bool,
     pub velocity_secret: String,
 }
@@ -19,7 +19,7 @@ impl Default for Config {
     fn default() -> Self {
         Config {
             version: built_info::PKG_VERSION.to_string(),
-            address: "127.0.0.1:25565".to_string(),
+            listen_address: "127.0.0.1:25565".to_string(),
             velocity: false,
             velocity_secret: thread_rng().sample_iter(&Alphanumeric).take(16).collect(),
         }

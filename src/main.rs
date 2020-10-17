@@ -3,9 +3,14 @@ extern crate lazy_static;
 
 use env_logger::{Builder, Env};
 use log::{error, info, warn};
+use std::net::SocketAddr;
 use std::io::Write;
+use tokio::net::{TcpListener, TcpStream};
 
 mod config;
+mod networking;
+
+use networking::Connection;
 
 fn init_logging() {
     let env = Env::default().filter("SHIRYUU_LOG_LEVEL");
@@ -47,9 +52,20 @@ fn init_config() {
     }
 }
 
-fn main() {
+async fn process(socket: TcpStream, address: SocketAddr) {
+    let mut conn = Connection::new(address);
+}
+
+#[tokio::main]
+async fn main() {
     init_logging();
     init_config();
 
-    info!("Binding to address {}", &config::CONFIG.address);
+
+    let listener = TcpListener::bind(&config::CONFIG.listen_address).await.unwrap();
+
+    loop {
+        let (socket, address) = listener.accept().await.unwrap();
+        process(socket, address).await;
+    }
 }
