@@ -18,9 +18,7 @@ fn init_logging() {
         .init();
 }
 
-fn main() {
-    init_logging();
-
+fn init_config() {
     info!(
         "{} {}",
         config::built_info::get_pretty_name(),
@@ -47,6 +45,11 @@ fn main() {
         }
         Err(e) => return error!("{}", e),
     }
+}
+
+fn main() {
+    init_logging();
+    init_config();
 
     info!("Binding to address {}", &config::CONFIG.address);
 }
