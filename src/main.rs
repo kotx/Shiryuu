@@ -2,15 +2,15 @@
 extern crate lazy_static;
 
 use env_logger::{Builder, Env};
-use log::{error, info, warn};
-use std::net::SocketAddr;
+use log::{debug, error, info, trace, warn};
+use std::net::{Shutdown, SocketAddr};
 use std::io::Write;
 use tokio::net::{TcpListener, TcpStream};
 
 mod config;
 mod networking;
 
-use networking::connection::Connection;
+use networking::connection::{Connection, PacketParseError};
 
 fn init_logging() {
     let env = Env::default().filter("SHIRYUU_LOG_LEVEL");
@@ -54,7 +54,28 @@ fn init_config() -> Result<(), config::ConfigError> {
 
 async fn process(socket: TcpStream, address: SocketAddr) {
     info!("Incoming connection from {}", address);
-    let mut conn = Connection::new(socket, address);
+    let mut connection = Connection::new(socket, address);
+    let packet = match connection.get_packet().await {
+        Ok(packet ) => packet,
+        Err(PacketParseError::BadVarInt(e)) | Err(PacketParseError::BadVarLong(e)) => {
+            info!("Dropped bad connection from {}; received bad VarInt or VarLong.", connection.address);
+            debug!("Reason: {:?}", e);
+            connection.shutdown(Shutdown::Both).unwrap();
+            return;
+        }
+        Err(PacketParseError::BadData(e)) => {
+            info!("Dropped bad connection from {}; received bad data.", connection.address);
+            debug!("Reason: {:?}", e);
+            connection.shutdown(Shutdown::Both).unwrap();
+            return;
+        }
+        Err(PacketParseError::Unknown()) => {
+            warn!("Unknown packet parsing error. Uh oh. Dropping connection from {}...", connection.address);
+            return;
+        }
+    };
+
+    trace!("Received packet from {}:\n{:?}", connection.address, packet);
 }
 
 #[tokio::main]
@@ -70,6 +91,9 @@ async fn main() {
 
     loop {
         let (socket, address) = listener.accept().await.unwrap();
-        process(socket, address).await;
+
+        tokio::spawn(async move {
+            process(socket, address).await;
+        });
     }
 }

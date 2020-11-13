@@ -1,7 +1,6 @@
 extern crate inflector;
 extern crate version_compare;
-use rand::distributions::Alphanumeric;
-use rand::{thread_rng, Rng};
+
 use serde::{Deserialize, Serialize};
 use std::fs;
 use std::path::Path;
@@ -12,8 +11,9 @@ use version_compare::Version;
 pub struct Config {
     version: String,
     pub listen_address: String,
-    pub velocity: bool,
-    pub velocity_secret: String,
+    pub drop_invalid_packets: bool,
+    // pub velocity: bool,
+    // pub velocity_secret: String,
 }
 
 impl Default for Config {
@@ -21,8 +21,9 @@ impl Default for Config {
         Config {
             version: built_info::PKG_VERSION.to_string(),
             listen_address: "127.0.0.1:25565".to_string(),
-            velocity: false,
-            velocity_secret: thread_rng().sample_iter(&Alphanumeric).take(16).collect(),
+            drop_invalid_packets: false,
+            // velocity: false,
+            // velocity_secret: thread_rng().sample_iter(&Alphanumeric).take(16).collect(),
         }
     }
 }
