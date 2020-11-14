@@ -13,6 +13,7 @@ env_logger = "0.8"
 Inflector = { version="0.11", default-features=false }
 lazy_static = "1.4"
 log = "0.4"
+mcproto-rs = { git = "https://github.com/Twister915/mcproto-rs", branch = "master" }
 rand = "0.7"
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "1.0"

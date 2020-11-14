@@ -21,7 +21,7 @@ impl Default for Config {
         Config {
             version: built_info::PKG_VERSION.to_string(),
             listen_address: "127.0.0.1:25565".to_string(),
-            drop_invalid_packets: false,
+            // drop_invalid_packets: false,
             // velocity: false,
             // velocity_secret: thread_rng().sample_iter(&Alphanumeric).take(16).collect(),
         }
