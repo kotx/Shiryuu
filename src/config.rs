@@ -11,7 +11,7 @@ use version_compare::Version;
 pub struct Config {
     version: String,
     pub listen_address: String,
-    pub drop_invalid_packets: bool,
+    // pub drop_invalid_packets: bool,
     // pub velocity: bool,
     // pub velocity_secret: String,
 }
