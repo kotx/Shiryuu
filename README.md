@@ -1,5 +1,7 @@
 # Shiryuu Server (支流)
 
+[![FOSSA Status](https://app.fossa.com/api/projects/custom%2B15440%2Fgit%40github.com%3AShiryuuMC%2FShiryuu.git.svg?type=shield)](https://app.fossa.com/projects/custom%2B15440%2Fgit%40github.com%3AShiryuuMC%2FShiryuu.git?ref=badge_shield)
+
 Shiryuu is a router proxy for Minecraft, allowing multiple servers to be hosted behind one IP with no client configuration.
 
 Shiryuu can sit in front or behind of existing proxies like BungeeCord.
