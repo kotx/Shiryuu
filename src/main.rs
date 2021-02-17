@@ -60,13 +60,11 @@ async fn process(socket: TcpStream, address: SocketAddr) {
         Err(PacketParseError::BadVarInt(e)) | Err(PacketParseError::BadVarLong(e)) => {
             info!("Dropped bad connection from {}; received bad VarInt or VarLong.", connection.address);
             debug!("Reason: {:?}", e);
-            connection.shutdown(Shutdown::Both).unwrap();
             return;
         }
         Err(PacketParseError::BadData(e)) => {
             info!("Dropped bad connection from {}; received bad data.", connection.address);
             debug!("Reason: {:?}", e);
-            connection.shutdown(Shutdown::Both).unwrap();
             return;
         }
         Err(PacketParseError::Unknown()) => {

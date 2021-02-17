@@ -56,10 +56,6 @@ impl Connection {
             Err(_) => Err(PacketParseError::BadData(None)),
         };
     }
-
-    pub fn shutdown(&mut self, how: Shutdown) -> Result<(), std::io::Error> {
-        self.socket.shutdown(how)
-    }
 }
 
 #[derive(Error, Debug)]
