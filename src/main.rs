@@ -3,7 +3,7 @@ extern crate lazy_static;
 
 use env_logger::{Builder, Env};
 use log::{debug, error, info, trace, warn};
-use std::net::{Shutdown, SocketAddr};
+use std::net::SocketAddr;
 use std::io::Write;
 use tokio::net::{TcpListener, TcpStream};
 

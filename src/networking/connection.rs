@@ -1,5 +1,5 @@
 use super::packet::{utils, Packet};
-use std::net::{Shutdown, SocketAddr};
+use std::net::SocketAddr;
 use thiserror::Error;
 use tokio::io::AsyncReadExt;
 use tokio::net::TcpStream;
